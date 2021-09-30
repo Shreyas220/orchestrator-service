@@ -1,4 +1,4 @@
-package main
+package datamock
 
 import (
 	"context"
@@ -13,41 +13,41 @@ import (
 	"google.golang.org/grpc/reflection"
 )
 
-type MockDatarServer struct {
+type MockServer struct {
 }
 
-func (s *MockDatarServer) GetMockUserData(ctx context.Context, p *protos.RequestMessage) (*protos.User, error) {
-	name := p.GetName()
-	var length = len([]rune(name))
+func (s *MockServer) GetMockUserData(ctx context.Context, p *protos.RequestMessage) (*protos.User, error) {
+	log.Printf("Receive name from from GetUser in Mockdata: %s", p.GetName())
+	name := p.Name
+	var length = len(name)
 	if length < 6 {
-		return nil, errors.New("name less than 6 charector ")
+		log.Fatalf("name less than 6 charector")
+		return nil, errors.New("name less than 6 charector")
 	}
 	roll := length * 10
-	return &protos.User{
+	User := &protos.User{
 		Name:  name,
 		Class: int64(length),
 		Roll:  int64(roll),
-	}, errors.New("hah")
+	}
+	return User, nil
 }
 
-func main() {
+func MockDataServer() {
 
-	// create a new gRPC server, use WithInsecure to allow http connections
 	gs := grpc.NewServer()
 
-	t := MockDatarServer{}
+	t := MockServer{}
 
 	protos.RegisterDataMockServiceServer(gs, &t)
 	reflection.Register(gs)
 
-	// create a TCP socket for inbound server connections
 	l, err := net.Listen("tcp", fmt.Sprintf(":%d", 10000))
 	if err != nil {
 		log.Fatalf("failed to serve: %s", err)
 		os.Exit(1)
 	}
-	fmt.Println("listening on port 10000")
-	// listen for requests
+	fmt.Println("Mock data listening on listening on port 10000")
 	gs.Serve(l)
 
 }
