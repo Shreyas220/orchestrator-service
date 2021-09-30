@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 
 	"github.com/Shreyas220/orchestrator-service/protos"
@@ -11,7 +12,7 @@ import (
 func main() {
 
 	var conn *grpc.ClientConn
-	conn, err := grpc.Dial(":9000", grpc.WithInsecure())
+	conn, err := grpc.Dial(":8000", grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("did not connect: %s", err)
 	}
@@ -19,11 +20,19 @@ func main() {
 
 	c := protos.NewOrchestratorServiceClient(conn)
 
+	fmt.Println("Enter Your  Name: ")
+
+	// var then variable name then variable type
+	var name string
+
+	// Taking input from user
+	fmt.Scanln(&name)
+
 	response, err := c.GetUserByName(context.Background(), &protos.RequestMessage{
-		Name: "Shreyas",
+		Name: name,
 	})
 	if err != nil {
-		log.Fatalf("Error when calling SayHello: %s", err)
+		log.Fatalf("Error when calling GetUserByName: %s", err)
 	}
 	log.Printf("Response from server: %s", response)
 
