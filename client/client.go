@@ -9,10 +9,11 @@ import (
 	"google.golang.org/grpc"
 )
 
+//this functions returns nothing but displace the error or response from the request sent to GetUserByName
 func main() {
 
 	var conn *grpc.ClientConn
-	conn, err := grpc.Dial(":8000", grpc.WithInsecure())
+	conn, err := grpc.Dial(":9000", grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("did not connect: %s", err)
 	}
@@ -20,14 +21,13 @@ func main() {
 
 	c := protos.NewOrchestratorServiceClient(conn)
 
+	//Asking for name from user
 	fmt.Println("Enter Your  Name: ")
-
-	// var then variable name then variable type
 	var name string
-
 	// Taking input from user
 	fmt.Scanln(&name)
 
+	//sending request to the method GetUserByName
 	response, err := c.GetUserByName(context.Background(), &protos.RequestMessage{
 		Name: name,
 	})

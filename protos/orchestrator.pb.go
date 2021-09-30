@@ -65,7 +65,7 @@ func (m *RequestMessage) GetName() string {
 
 type User struct {
 	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Class                string   `protobuf:"bytes,2,opt,name=class,proto3" json:"class,omitempty"`
+	Class                int64    `protobuf:"varint,2,opt,name=class,proto3" json:"class,omitempty"`
 	Roll                 int64    `protobuf:"varint,3,opt,name=roll,proto3" json:"roll,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -104,11 +104,11 @@ func (m *User) GetName() string {
 	return ""
 }
 
-func (m *User) GetClass() string {
+func (m *User) GetClass() int64 {
 	if m != nil {
 		return m.Class
 	}
-	return ""
+	return 0
 }
 
 func (m *User) GetRoll() int64 {
@@ -119,8 +119,8 @@ func (m *User) GetRoll() int64 {
 }
 
 func init() {
-	proto.RegisterType((*RequestMessage)(nil), "RequestMessage")
-	proto.RegisterType((*User)(nil), "User")
+	proto.RegisterType((*RequestMessage)(nil), "protos.RequestMessage")
+	proto.RegisterType((*User)(nil), "protos.User")
 }
 
 func init() {
@@ -128,18 +128,21 @@ func init() {
 }
 
 var fileDescriptor_96b6e6782baaa298 = []byte{
-	// 163 bytes of a gzipped FileDescriptorProto
+	// 209 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x12, 0xca, 0x2f, 0x4a, 0xce,
-	0x48, 0x2d, 0x2e, 0x29, 0x4a, 0x2c, 0xc9, 0x2f, 0xd2, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x57, 0x52,
-	0xe1, 0xe2, 0x0b, 0x4a, 0x2d, 0x2c, 0x4d, 0x2d, 0x2e, 0xf1, 0x4d, 0x2d, 0x2e, 0x4e, 0x4c, 0x4f,
-	0x15, 0x12, 0xe2, 0x62, 0xc9, 0x4b, 0xcc, 0x4d, 0x95, 0x60, 0x54, 0x60, 0xd4, 0xe0, 0x0c, 0x02,
-	0xb3, 0x95, 0x5c, 0xb8, 0x58, 0x42, 0x8b, 0x53, 0x8b, 0xb0, 0xc9, 0x09, 0x89, 0x70, 0xb1, 0x26,
-	0xe7, 0x24, 0x16, 0x17, 0x4b, 0x30, 0x81, 0x05, 0x21, 0x1c, 0x90, 0xca, 0xa2, 0xfc, 0x9c, 0x1c,
-	0x09, 0x66, 0x05, 0x46, 0x0d, 0xe6, 0x20, 0x30, 0xdb, 0xc8, 0x81, 0x4b, 0xd8, 0x1f, 0xc9, 0x05,
-	0xc1, 0xa9, 0x45, 0x65, 0x99, 0xc9, 0xa9, 0x42, 0x9a, 0x5c, 0xbc, 0xee, 0xa9, 0x25, 0x20, 0xf3,
-	0x9d, 0x2a, 0xfd, 0x40, 0x26, 0xf2, 0xeb, 0xa1, 0x3a, 0x49, 0x8a, 0x55, 0x0f, 0x24, 0xab, 0xc4,
-	0x90, 0xc4, 0x06, 0x76, 0xb4, 0x31, 0x20, 0x00, 0x00, 0xff, 0xff, 0xd6, 0x11, 0x40, 0x5e, 0xca,
-	0x00, 0x00, 0x00,
+	0x48, 0x2d, 0x2e, 0x29, 0x4a, 0x2c, 0xc9, 0x2f, 0xd2, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x62,
+	0x03, 0x53, 0xc5, 0x4a, 0x2a, 0x5c, 0x7c, 0x41, 0xa9, 0x85, 0xa5, 0xa9, 0xc5, 0x25, 0xbe, 0xa9,
+	0xc5, 0xc5, 0x89, 0xe9, 0xa9, 0x42, 0x42, 0x5c, 0x2c, 0x79, 0x89, 0xb9, 0xa9, 0x12, 0x8c, 0x0a,
+	0x8c, 0x1a, 0x9c, 0x41, 0x60, 0xb6, 0x92, 0x0b, 0x17, 0x4b, 0x68, 0x71, 0x6a, 0x11, 0x36, 0x39,
+	0x21, 0x11, 0x2e, 0xd6, 0xe4, 0x9c, 0xc4, 0xe2, 0x62, 0x09, 0x26, 0x05, 0x46, 0x0d, 0xe6, 0x20,
+	0x08, 0x07, 0xa4, 0xb2, 0x28, 0x3f, 0x27, 0x47, 0x82, 0x19, 0x2c, 0x08, 0x66, 0x1b, 0x35, 0x32,
+	0x72, 0x09, 0xfb, 0x23, 0x39, 0x25, 0x38, 0xb5, 0xa8, 0x2c, 0x33, 0x39, 0x55, 0xc8, 0x9c, 0x8b,
+	0xd7, 0x3d, 0xb5, 0x04, 0x64, 0x81, 0x53, 0xa5, 0x1f, 0xc8, 0x48, 0x31, 0x88, 0x23, 0x8b, 0xf5,
+	0x50, 0x9d, 0x26, 0xc5, 0x03, 0x13, 0x07, 0xa9, 0x55, 0x62, 0x10, 0x32, 0xe4, 0x62, 0x87, 0x6a,
+	0x24, 0x56, 0x8b, 0x91, 0x0f, 0x17, 0xbf, 0x4b, 0x62, 0x49, 0xa2, 0x6f, 0x7e, 0x72, 0x36, 0xcc,
+	0x7a, 0x4b, 0x2e, 0x7e, 0xf7, 0xd4, 0x12, 0x90, 0x08, 0x48, 0x0d, 0x48, 0x96, 0x58, 0xd3, 0x92,
+	0x20, 0xa1, 0x68, 0x0c, 0x08, 0x00, 0x00, 0xff, 0xff, 0xc7, 0x17, 0x16, 0x31, 0x62, 0x01, 0x00,
+	0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -155,6 +158,7 @@ const _ = grpc.SupportPackageIsVersion6
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type OrchestratorServiceClient interface {
 	GetUserByName(ctx context.Context, in *RequestMessage, opts ...grpc.CallOption) (*User, error)
+	GetUser(ctx context.Context, in *RequestMessage, opts ...grpc.CallOption) (*User, error)
 }
 
 type orchestratorServiceClient struct {
@@ -167,7 +171,16 @@ func NewOrchestratorServiceClient(cc grpc.ClientConnInterface) OrchestratorServi
 
 func (c *orchestratorServiceClient) GetUserByName(ctx context.Context, in *RequestMessage, opts ...grpc.CallOption) (*User, error) {
 	out := new(User)
-	err := c.cc.Invoke(ctx, "/OrchestratorService/GetUserByName", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/protos.OrchestratorService/GetUserByName", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orchestratorServiceClient) GetUser(ctx context.Context, in *RequestMessage, opts ...grpc.CallOption) (*User, error) {
+	out := new(User)
+	err := c.cc.Invoke(ctx, "/protos.OrchestratorService/GetUser", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -177,6 +190,7 @@ func (c *orchestratorServiceClient) GetUserByName(ctx context.Context, in *Reque
 // OrchestratorServiceServer is the server API for OrchestratorService service.
 type OrchestratorServiceServer interface {
 	GetUserByName(context.Context, *RequestMessage) (*User, error)
+	GetUser(context.Context, *RequestMessage) (*User, error)
 }
 
 // UnimplementedOrchestratorServiceServer can be embedded to have forward compatible implementations.
@@ -185,6 +199,9 @@ type UnimplementedOrchestratorServiceServer struct {
 
 func (*UnimplementedOrchestratorServiceServer) GetUserByName(ctx context.Context, req *RequestMessage) (*User, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserByName not implemented")
+}
+func (*UnimplementedOrchestratorServiceServer) GetUser(ctx context.Context, req *RequestMessage) (*User, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUser not implemented")
 }
 
 func RegisterOrchestratorServiceServer(s *grpc.Server, srv OrchestratorServiceServer) {
@@ -201,7 +218,7 @@ func _OrchestratorService_GetUserByName_Handler(srv interface{}, ctx context.Con
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/OrchestratorService/GetUserByName",
+		FullMethod: "/protos.OrchestratorService/GetUserByName",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrchestratorServiceServer).GetUserByName(ctx, req.(*RequestMessage))
@@ -209,13 +226,107 @@ func _OrchestratorService_GetUserByName_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OrchestratorService_GetUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestMessage)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrchestratorServiceServer).GetUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/protos.OrchestratorService/GetUser",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrchestratorServiceServer).GetUser(ctx, req.(*RequestMessage))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _OrchestratorService_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "OrchestratorService",
+	ServiceName: "protos.OrchestratorService",
 	HandlerType: (*OrchestratorServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "GetUserByName",
 			Handler:    _OrchestratorService_GetUserByName_Handler,
+		},
+		{
+			MethodName: "GetUser",
+			Handler:    _OrchestratorService_GetUser_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "orchestrator.proto",
+}
+
+// DataMockServiceClient is the client API for DataMockService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+type DataMockServiceClient interface {
+	GetMockUserData(ctx context.Context, in *RequestMessage, opts ...grpc.CallOption) (*User, error)
+}
+
+type dataMockServiceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewDataMockServiceClient(cc grpc.ClientConnInterface) DataMockServiceClient {
+	return &dataMockServiceClient{cc}
+}
+
+func (c *dataMockServiceClient) GetMockUserData(ctx context.Context, in *RequestMessage, opts ...grpc.CallOption) (*User, error) {
+	out := new(User)
+	err := c.cc.Invoke(ctx, "/protos.DataMockService/GetMockUserData", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// DataMockServiceServer is the server API for DataMockService service.
+type DataMockServiceServer interface {
+	GetMockUserData(context.Context, *RequestMessage) (*User, error)
+}
+
+// UnimplementedDataMockServiceServer can be embedded to have forward compatible implementations.
+type UnimplementedDataMockServiceServer struct {
+}
+
+func (*UnimplementedDataMockServiceServer) GetMockUserData(ctx context.Context, req *RequestMessage) (*User, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMockUserData not implemented")
+}
+
+func RegisterDataMockServiceServer(s *grpc.Server, srv DataMockServiceServer) {
+	s.RegisterService(&_DataMockService_serviceDesc, srv)
+}
+
+func _DataMockService_GetMockUserData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestMessage)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DataMockServiceServer).GetMockUserData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/protos.DataMockService/GetMockUserData",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DataMockServiceServer).GetMockUserData(ctx, req.(*RequestMessage))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+var _DataMockService_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "protos.DataMockService",
+	HandlerType: (*DataMockServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GetMockUserData",
+			Handler:    _DataMockService_GetMockUserData_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

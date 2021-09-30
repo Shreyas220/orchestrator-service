@@ -1,5 +1,6 @@
 syntax = "proto3";
 
+package protos;
 
 message RequestMessage {
 string name = 1;
@@ -8,11 +9,17 @@ string name = 1;
 
 message User {
     string name = 1;
-    string class = 2;
-    int64 roll = 3;
+    int class = 2;
+    int roll = 3;
 }
 
 service OrchestratorService {
     rpc GetUserByName(RequestMessage) returns (User) {}
+    rpc GetUser(RequestMessage) returns (User) {}
 }
 
+
+
+service DataMockService {
+    rpc GetMockUserData(RequestMessage) returns (User) {}
+}

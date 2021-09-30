@@ -1,4 +1,4 @@
-package main
+package datamock
 
 import (
 	"context"
@@ -13,30 +13,41 @@ import (
 	"google.golang.org/grpc/reflection"
 )
 
-type MockDatarServer struct {
+// Mockserver is a gRPC server it implements the methods defined by the DataMockService interface
+type MockServer struct {
 }
 
-func (s *MockDatarServer) GetMockUserData(ctx context.Context, p *protos.RequestMessage) (*protos.User, error) {
-	name := p.GetName()
-	var length = len([]rune(name))
+//GetMockUserData implements the OrchestratorServiceServer method and returns the User
+func (s *MockServer) GetMockUserData(ctx context.Context, p *protos.RequestMessage) (*protos.User, error) {
+	log.Printf("Receive name from from GetUser in Mockdata: %s", p.GetName())
+	name := p.Name
+
+	var length = len(name)
+	//checking if length is lesser than 6
 	if length < 6 {
-		return nil, errors.New("name less than 6 charector ")
+		log.Fatalf("name less than 6 charector")
+		return nil, errors.New("name less than 6 charector")
 	}
+	//storing roll
 	roll := length * 10
-	return &protos.User{
+
+	User := &protos.User{
 		Name:  name,
 		Class: int64(length),
 		Roll:  int64(roll),
-	}, errors.New("hah")
+	}
+	return User, nil
 }
 
-func main() {
-
+func MockDataServer() {
 	// create a new gRPC server, use WithInsecure to allow http connections
 	gs := grpc.NewServer()
 
-	t := MockDatarServer{}
+	// create an instance of the OrchestratorServiceServer server
+	t := MockServer{}
 
+	// register the reflection service which allows clients to determine the methods
+	// for this gRPC service
 	protos.RegisterDataMockServiceServer(gs, &t)
 	reflection.Register(gs)
 
@@ -46,8 +57,7 @@ func main() {
 		log.Fatalf("failed to serve: %s", err)
 		os.Exit(1)
 	}
-	fmt.Println("listening on port 10000")
-	// listen for requests
+	fmt.Println("Mock data listening on listening on port 10000")
 	gs.Serve(l)
 
 }
